@@ -1,0 +1,81 @@
+start docker:
+    systemctl start docker
+
+Flags:
+    -it : interactive model (runs foreground)
+    --name : gives name
+    -d : detached (runs background)
+    -p : port
+    -a : all
+    -f : force
+
+Download/ run a container:
+     docker container run [OPTIONS] (packageName/containerName)
+
+        80:80 your ports (machine):(container)
+        -it, -p, -d, --name flags optional
+
+        examples:
+            sudo docker container run -it -p 80:80 nginx
+            docker container run -d -p 8080:80 --name mynginx nginx
+        example with environmental variable:
+            docker container run -d -p 3306:3306 --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql
+        create container and map volume to somewhere in your file system:
+            docker container run -d -p 8080:80 -v $(pwd):/usr/share/nginx/html --name nginix-website nginx
+                                                   (filesystem loc):(container loc)                             
+
+Show all running containers:
+    docker container ls
+
+    shorter way:
+        docker ps
+
+Show all running and non running containers:
+    docker container ls -a
+
+stop a container:
+    docker container stop (name)
+
+    example: docker container stop mysql
+
+remove container:
+    docker container rm (id)
+    
+    example: docker container rm 95a
+    Note: this doesn't remove images
+
+run a command in a running container: 
+    docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+    example: docker container exec -it mynginx bash
+
+create volume to match area in a container with an area in the local file system:
+
+build an image:
+    docker image build -t (username)/(image name) (location of docker file)
+
+    example:
+        docker image build -t dashedge/nginx-website .
+
+push image to dockerhub:
+    docker push (image name)
+
+    example:
+        docker push dashedge/nginx-website
+
+    note: do (docker login) in case of any authentication errors
+
+show images:
+    docker images
+
+remove image:
+    docker image rm (id)
+
+pull an image:
+    docker pull (name)
+
+    example: docker pull nginx
+
+compound commands:
+    remove: all containers
+        sudo docker rm $(sudo docker ps -aq) -f
