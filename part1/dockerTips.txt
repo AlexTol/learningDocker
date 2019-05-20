@@ -79,3 +79,13 @@ pull an image:
 compound commands:
     remove: all containers
         sudo docker rm $(sudo docker ps -aq) -f
+
+build a container from docker-compose.yaml file
+    (run in directory)
+    docker-compose up [Options]
+
+    example:
+        docker-compose up -d
+
+unbuild a container:
+    docker-compose down [Options]
